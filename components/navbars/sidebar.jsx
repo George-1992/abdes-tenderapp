@@ -133,21 +133,22 @@ export default function Sidebar({
         return null;
     };
 
+    // #1d3531
     return (
-        <div className={`relative h-screen border-r-2 border-gray-200 bg-gray-50 flex flex-col flex-shrink-0 transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'
+        <div className={`relative h-screen border-r-2 shadow-lg border-[var(--accent)] bg-[var(--primary)] text-[var(--primary-foreground)] flex flex-col flex-shrink-0 transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'
             }`}>
             {/* Header */}
             <div className={cn(
-                'w-full h-28 overflow-hidden border-b-[1.5px] border-gray-200 flex flex-col',
-                isCollapsed ? 'items-center justify-center py-1 px-1' : 'items-start py-3 px-3',
+                'w-full overflow-hidden border-b-[0px] border-[var(--accent)] flex flex-col bg-green-950/70',
+                isCollapsed ? 'items-center justify-center py-1 px-1' : 'items-start py-6 px-3',
             )}>
                 <div className="flex items-center justify-between ">
                     <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : ''}`}>
                         <Image
                             src="/images/logos/main.png"
                             alt="Logo"
-                            width={25}
-                            height={25}
+                            width={45}
+                            height={45}
                         />
                         {!isCollapsed && (
                             <div className="text-lg font-semibold ">
@@ -158,18 +159,18 @@ export default function Sidebar({
                     <button
                         onClick={() => setIsCollapsed(!isCollapsed)}
                         data-id='collapse-sidebar-btn'
-                        className="p-1 rounded hover:bg-gray-100 transition-colors absolute -right-10 top-5 transform -translate-y-1/2"
+                        className="p-1 rounded hover:bg-[var(--primary-hover)] transition-colors absolute -right-10 top-5 transform -translate-y-1/2"
                         title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                     >
-                        <PanelsTopLeft className="w-5 h-5 text-gray-600" />
+                        <PanelsTopLeft className="w-5 h-5 text-[var(--primary)]" />
                     </button>
                 </div>
 
-                <Workspaces
+                {/* <Workspaces
                     session={session}
                     user={user} account={account}
                     isCollapsed={isCollapsed} workspaces={workspaces}
-                />
+                /> */}
 
             </div>
 
@@ -186,8 +187,8 @@ export default function Sidebar({
                                         onClick={() => toggleExpanded(item.name)}
                                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-left
                                             ${isActive(item.href)
-                                                ? 'bg-gray-200 text-[var(--primary-foreground)]'
-                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                                ? 'bg-[var(--primary-hover)] text-[var(--primary-foreground)]'
+                                                : 'text-[var(--primary-foreground)]/80 hover:bg-[var(--primary-hover)] hover:text-[var(--primary-foreground)]'
                                             }`}
                                         title={isCollapsed ? item.name : ''}
                                     >
@@ -196,7 +197,7 @@ export default function Sidebar({
                                             <>
                                                 <span className="flex-1">{item.name}</span>
                                                 <ChevronRight
-                                                    className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0
+                                                    className={`w-4 h-4 text-[var(--primary-foreground)]/70 transition-transform flex-shrink-0
                                                         ${expandedItems.has(item.name) ? 'rotate-90' : ''}`}
                                                 />
                                             </>
@@ -209,8 +210,8 @@ export default function Sidebar({
                                         className={` flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors
                                             ${isCollapsed ? 'w-fit justify-center' : 'w-full justify-start gap-3'}
                                             ${isActive(item.href)
-                                                ? 'bg-gray-200 text-[var(--primary-foreground)]'
-                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                                ? 'bg-[var(--primary-hover)] text-[var(--primary-foreground)]'
+                                                : 'text-[var(--primary-foreground)]/80 hover:bg-[var(--primary-hover)] hover:text-[var(--primary-foreground)]'
                                             }`}
                                         title={isCollapsed ? item.name : ''}
                                     >
@@ -228,8 +229,8 @@ export default function Sidebar({
                                                     href={subItem.href}
                                                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
                                                         ${isActive(subItem.href)
-                                                            ? 'bg-gray-100 text-[var(--primary-foreground)]'
-                                                            : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                                                            ? 'bg-[var(--primary-hover)] text-[var(--primary-foreground)]'
+                                                            : 'text-[var(--primary-foreground)]/75 hover:bg-[var(--primary-hover)] hover:text-[var(--primary-foreground)]'
                                                         }`}
                                                 >
                                                     {subItem.icon && <subItem.icon className="w-4 h-4 flex-shrink-0" />}
@@ -247,24 +248,24 @@ export default function Sidebar({
             </nav>
 
             {/* Footer */}
-            <div className="p-4 border-t-[1.5px] border-gray-200">
+            <div className="p-4 border-t-[1.5px] border-[var(--accent)]">
                 <div className={`flex items-center gap-3 px-3 py-2 ${isCollapsed ? 'justify-center' : ''}`}>
                     {isCollapsed &&
-                        <button className="p-1 rounded hover:bg-gray-100" title="Logout" onClick={handleThisSignout}>
-                            <LogOut className="w-4 h-4 text-gray-500" />
+                        <button className="p-1 rounded hover:bg-[var(--primary-hover)]" title="Logout" onClick={handleThisSignout}>
+                            <LogOut className="w-4 h-4 text-[var(--primary-foreground)]/75" />
                         </button>
                     }
                     {!isCollapsed && (
                         <>
-                            <div className="bg-gray-200 rounded-full p-1">
-                                <User2 className="size-5 text-gray-500" />
+                            <div className="bg-[var(--primary-hover)] rounded-full p-1">
+                                <User2 className="size-5 text-[var(--primary-foreground)]" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-900 truncate">{fullName}</p>
-                                <p className="text-xs text-gray-500 truncate">{session?.email}</p>
+                                <p className="text-sm font-medium text-[var(--primary-foreground)] truncate">{fullName}</p>
+                                <p className="text-xs text-[var(--primary-foreground)]/70 truncate">{session?.email}</p>
                             </div>
-                            <button className="p-1 rounded hover:bg-gray-100" title="Logout" onClick={handleThisSignout}>
-                                <LogOut className="w-4 h-4 text-gray-500" />
+                            <button className="p-1 rounded hover:bg-[var(--primary-hover)]" title="Logout" onClick={handleThisSignout}>
+                                <LogOut className="w-4 h-4 text-[var(--primary-foreground)]/75" />
                             </button>
                         </>
                     )}

@@ -1,12 +1,12 @@
 import AuthEl from "@/components/auth"
 import VerifyAccount from "@/components/auth/verify";
-import AiAgentPage from "@/components/pages/aiAgent";
 import Home from "@/components/pages/home";
 import Notes from "@/components/pages/notes";
+import Projects from "@/components/pages/projects";
 import Profile from "@/components/pages/profile"
 import Settings from "@/components/pages/settings";
 import Test from "@/components/pages/test";
-import { BotIcon, HomeIcon, ListChevronsUpDown, NotebookTextIcon } from "lucide-react";
+import { FolderKanbanIcon, HomeIcon, ListChevronsUpDown, NotebookTextIcon } from "lucide-react";
 
 const pagesMap = [
     // AUTH PAGES
@@ -47,17 +47,21 @@ const pagesMap = [
         pathname: '/ai-agent',
         Component: (props) => { return <AiAgentPage {...props} />; },
     },
-    {
-        pathname: '/test',
-        Component: (props) => { return <Test {...props} />; },
-    },
-    {
-        pathname: '/test/{{ITEM_ID}}',
-        Component: (props) => { return <Test {...props} />; },
-    },
+    // {
+    //     pathname: '/test',
+    //     Component: (props) => { return <Test {...props} />; },
+    // },
+    // {
+    //     pathname: '/test/{{ITEM_ID}}',
+    //     Component: (props) => { return <Test {...props} />; },
+    // },
     {
         pathname: '/notes',
         Component: (props) => { return <Notes {...props} />; },
+    },
+    {
+        pathname: '/projects',
+        Component: (props) => { return <Projects {...props} />; },
     },
 
 ]
@@ -70,9 +74,9 @@ export const pagesMapSidebar = [
         subItems: []
     },
     {
-        name: 'AI Agent',
-        icon: (props) => <BotIcon {...props} />,
-        href: '/ai-agent',
+        name: 'Projects',
+        icon: (props) => <FolderKanbanIcon {...props} />,
+        href: '/projects',
         subItems: []
     },
     {
@@ -81,15 +85,15 @@ export const pagesMapSidebar = [
         href: '/notes',
         subItems: []
     },
-    {
-        name: 'Test',
-        icon: (props) => <ListChevronsUpDown {...props} />,
-        href: '/test',
-        expanded: true,
-        subItems: [
-            { name: 'sub-test', href: '/test/sub-test', icon: (props) => <div {...props}>test</div> },
-        ]
-    },
+    // {
+    //     name: 'Test',
+    //     icon: (props) => <ListChevronsUpDown {...props} />,
+    //     href: '/test',
+    //     expanded: true,
+    //     subItems: [
+    //         { name: 'sub-test', href: '/test/sub-test', icon: (props) => <div {...props}>test</div> },
+    //     ]
+    // },
 ]
 
 export default pagesMap;

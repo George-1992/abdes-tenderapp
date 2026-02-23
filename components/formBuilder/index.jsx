@@ -3,13 +3,12 @@
 import Validators from "@/utils/validation";
 import { useState, useEffect } from "react";
 import Select from "@/components/select";
-import DateInput from "@/components/date";
-import NotesArray from "@/components/other/notesArray";
 import { Toggle } from "@/components/other/toggle";
 import { cn } from "@/libs/utils";
+import FileUploader from "@/components/formBuilder/fileUploader";
 
 /**
- * FormBuilder Component
+ * FormBuilder Composnent
  * 
  * A flexible form generation component that renders form fields based on a fields array configuration.
  * Supports validation, custom field types, and dynamic field dependencies.
@@ -70,6 +69,11 @@ import { cn } from "@/libs/utils";
  */
 
 
+const DateInput = () => { null; }
+const NotesArray = () => { null; }
+
+
+
 export default function FormBuilder({
     className = '',
     heightClassName = '',
@@ -83,7 +87,7 @@ export default function FormBuilder({
     disabled = false,
     buttonClassName = '',
     excludeKeys = [],
-    buttons = [], //buttons components to render next to the Save button
+    buttons = [],
     isLoading = false,
     submitButtonText = 'Save',
     saveButtonTop = false,
@@ -161,9 +165,12 @@ export default function FormBuilder({
         onChange(nfd);
     };
 
+    // file inputs handled by FileUploader via onFiles callback
+
     const formSubmit = (e) => {
         try {
             // console.log('Form submit e==> ', e);
+            console.log('Form submit _formData ==> ', _formData);
             // console.log('Form submit disabled==> ', disabled);
 
             e.preventDefault();
@@ -262,8 +269,9 @@ export default function FormBuilder({
             'formBuilder',
             className,
             heightClassName,
+            'p-5 rounded-xl '
         )}>
-            <form className={`w-full gap-3 flex flex-col ${className}`} onSubmit={formSubmit}>
+            <form className="w-full gap-3 flex flex-col " onSubmit={formSubmit}>
                 {fields && fields.length > 0 && isForm && saveButtonTop &&
                     <div className="flex items-center justify-end">
                         {
@@ -284,7 +292,7 @@ export default function FormBuilder({
 
                 <div
                     className={cn(
-                        "w-full flex flex-col gap-3 p-0.5",
+                        "w-full flex flex-col gap-3 px-0.5",
                         heightClassName,
                         scrollable ? "overflow-y-auto px-0.5" : "overflow-hidden"
                     )}
@@ -332,14 +340,20 @@ export default function FormBuilder({
                                                     {field.label}
                                                 </label>
 
-                                                <div className="flex-1 h-full flex flex-col items-start justify-center">
-                                                    {field.EditComponent
-                                                        ? <field.EditComponent
-                                                            value={handleGetValue(field)}
-                                                            row={_formData}
-                                                            onChange={handleInputChange}
-                                                        />
-                                                        : <div className="w-full h-full relative rounded-md">
+                                                <div className="flex-1 flex flex-col items-start justify-center">
+                                                    {field.EditComponent || field.Component
+                                                        ? (field.EditComponent
+                                                            ? <field.EditComponent
+                                                                value={handleGetValue(field)}
+                                                                row={_formData}
+                                                                onChange={handleInputChange}
+                                                            />
+                                                            : <field.Component
+                                                                value={handleGetValue(field)}
+                                                                row={_formData}
+                                                            />
+                                                        )
+                                                        : <div className="w-full relative rounded-md">
                                                             {field.type === 'select'
                                                                 ? (
                                                                     <Select
@@ -394,34 +408,77 @@ export default function FormBuilder({
                                                                                 className={`w-full ${_formErrors[field.name] ? 'border-red-400' : ''} `}
                                                                             />
                                                                         )
-                                                                        : field.type === 'textarea'
-                                                                            ? (
-                                                                                <textarea
-                                                                                    id={field.name}
-                                                                                    name={field.name}
-                                                                                    placeholder={field.placeholder}
-                                                                                    className={`form-control h-full ${_formErrors[field.name] ? 'border-red-400' : ''} ${field.disabled && 'cursor-not-allowed'}`}
-                                                                                    required={field.required}
-                                                                                    onChange={handleInputChange}
-                                                                                    disabled={_isLoading || field.disabled}
-                                                                                    value={handleGetValue(field) || ''}
-                                                                                    rows={field.rows || 3}
-                                                                                />
-                                                                            )
-                                                                            : (
-                                                                                <input
-                                                                                    id={field.name}
-                                                                                    name={field.name}
-                                                                                    type={field.type}
-                                                                                    placeholder={field.placeholder}
-                                                                                    className={`form-control ${_formErrors[field.name] ? 'border-red-400' : ''} ${field.disabled && 'cursor-not-allowed'} ${field.className || ''}`}
-                                                                                    required={field.required}
-                                                                                    onChange={handleInputChange}
-                                                                                    disabled={_isLoading || field.disabled}
-                                                                                    value={handleGetValue(field) || ''}
-                                                                                    autoComplete={field.autoComplete || ''}
-                                                                                />
-                                                                            )}
+                                                                        : field.type === 'notesArray' ? (
+                                                                            <NotesArray
+                                                                                value={handleGetValue(field) || []}
+                                                                                onChange={(newValue) => {
+                                                                                    const newFormData = { ..._formData, [field.name]: newValue };
+                                                                                    _setFormData(newFormData);
+                                                                                    onChange(newFormData);
+                                                                                }}
+                                                                                placeholder={field.placeholder || "Enter note..."}
+                                                                                readOnly={_isLoading || field.disabled}
+                                                                                className={`${_formErrors[field.name] ? 'border-red-400' : ''}`}
+                                                                            />
+                                                                        )
+                                                                            : field.type === 'textarea'
+                                                                                ? (
+                                                                                    <textarea
+                                                                                        id={field.name}
+                                                                                        name={field.name}
+                                                                                        placeholder={field.placeholder}
+                                                                                        className={`form-control ${_formErrors[field.name] ? 'border-red-400' : ''} ${field.disabled && 'cursor-not-allowed'}`}
+                                                                                        required={field.required}
+                                                                                        onChange={handleInputChange}
+                                                                                        disabled={_isLoading || field.disabled}
+                                                                                        value={handleGetValue(field) || ''}
+                                                                                        rows={field.rows || 3}
+                                                                                    />
+                                                                                )
+                                                                                : (
+                                                                                    field.type === 'file' ? (
+                                                                                        <FileUploader
+                                                                                            name={field.name}
+                                                                                            accept={field.accept}
+                                                                                            multiple={field.multiple}
+                                                                                            uploadToS3={field.uploadToS3}
+                                                                                            disabled={_isLoading || field.disabled}
+                                                                                            required={field.required}
+                                                                                            className={`${_formErrors[field.name] ? 'border-red-400' : ''} ${field.className || ''}`}
+                                                                                            value={handleGetValue(field)}
+                                                                                            onFiles={(files) => {
+                                                                                                try {
+                                                                                                    // console.log('FileUploader files: ', files);
+
+                                                                                                    const value = field.multiple
+                                                                                                        ? files
+                                                                                                        : Array.isArray(files)
+                                                                                                            ? (files[0] || null)
+                                                                                                            : files;
+
+                                                                                                    const nfd = handlesSetValue(_formData, field.name, value);
+                                                                                                    _setFormData(nfd);
+                                                                                                    onChange(nfd);
+                                                                                                } catch (err) {
+                                                                                                    console.error('File onFiles handler error', err);
+                                                                                                }
+                                                                                            }}
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <input
+                                                                                            id={field.name}
+                                                                                            name={field.name}
+                                                                                            type={field.type}
+                                                                                            placeholder={field.placeholder}
+                                                                                            className={`form-control ${_formErrors[field.name] ? 'border-red-400' : ''} ${field.disabled && 'cursor-not-allowed'} ${field.className || ''}`}
+                                                                                            required={field.required}
+                                                                                            onChange={handleInputChange}
+                                                                                            disabled={_isLoading || field.disabled}
+                                                                                            value={handleGetValue(field) || ''}
+                                                                                            autoComplete={field.autoComplete || ''}
+                                                                                        />
+                                                                                    )
+                                                                                )}
                                                             {_isLoading && <div className="animate-shimmer" />}
 
 
@@ -461,8 +518,11 @@ export default function FormBuilder({
                                         {ButtonComp}
                                     </button>
                                 ))
-                                : <div className="flex items-center justify-end" type="submit">
-                                    <button className={`btn btn-primary min-w-24 ${buttonClassName}`} disabled={_isLoading || disabled} type="submit">
+                                : <div className="flex items-center justify-end" type="submit" >
+                                    <button
+                                        className={`btn btn-light min-w-24 ${buttonClassName} hover:bg-neutral-300`}
+                                        disabled={_isLoading || disabled} type="submit"
+                                    >
                                         {submitButtonText}
                                     </button>
                                 </div>
@@ -517,4 +577,4 @@ export const FormItem = ({
             )}
         </div>
     );
-};
+}

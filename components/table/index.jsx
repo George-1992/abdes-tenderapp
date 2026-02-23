@@ -637,7 +637,7 @@ export const Table = ({
                         searchable && (
                             <div>
                                 {/* <span className='text-[14px] text-gray-500'>Search </span> */}
-                                <div className='w-60 h-8 relative form-control flex items-center gap-2 '>
+                                <div className='w-60 h-8 relative form-control flex items-center gap-2 bg-white '>
                                     <Search className='size-4 text-gray-300' />
                                     <input
                                         type='text'

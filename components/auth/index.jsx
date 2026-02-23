@@ -3,11 +3,9 @@
 import { serverSubmit } from "@/actions/auth";
 import SigninEl from "@/components/auth/signinEl";
 import SignoutEl from "@/components/auth/signoutEl";
-import { GridPattern } from "@/components/other/grid";
-import Tabs, { TabTrigger } from "@/components/other/tabs";
 import { notify } from "@/components/sonnar/sonnar";
 import TurnstileEl from "@/components/turnstile";
-import { isAuthPath } from "@/utils/other";
+import { isAuthPath } from "@/utils/auth";
 import Validators from "@/utils/validation";
 import { Loader, Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -21,20 +19,7 @@ const NEXT_PUBLIC_PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'Dashbo
 export default function AuthEl({ type = 'signin', pathname, searchParams }) {
 
     const resetToken = searchParams?.token || null;
-    // console.log('AuthEl resetToken ==> ', type, resetToken);
 
-    const authProviders = [
-        {
-            name: 'Google',
-            icon: '/images/other/google-logo.png',
-            enabled: false,
-        },
-        {
-            name: 'Apple',
-            icon: '/images/other/apple-logo.png',
-            enabled: false,
-        }
-    ]
 
     const allFields = [
         {
@@ -261,36 +246,28 @@ export default function AuthEl({ type = 'signin', pathname, searchParams }) {
     return (
         <div className="w-full h-full flex justify-center"  >
 
-            {/* gird */}
-            <GridPattern
-                width={40}
-                height={40}
-                x={-1}
-                y={-1}
-                strokeDasharray={"0"}
-                squares={[[0, 0], [2, 2], [4, 4], [6, 6], [8, 8], [10, 10], [12, 12], [14, 14], [16, 16], [18, 18]]}
-                className={'z-0 opacity-30'}
-            />
+
 
             <div className="w-[90%] md:w-[450px] min-h-60 mt-10 ">
-                {/* branding */}
-                <div className="flex justify-center gap-3 mb-3 p-3 rounded-xl items-center glass-card bg-slate-50">
-                    <Image
-                        src="/images/logos/main.png"
-                        alt="Logo"
-                        width={48}
-                        height={48}
-                    />
-                    <div className="text-3xl">
-                        <span className="font-light" >
-                            {NEXT_PUBLIC_PROJECT_NAME}
-                        </span>
-
-                    </div>
-                </div>
 
                 {/* body */}
                 <div className="flex flex-col gap-4 bg-white rounded-xl shadow-lg p-6 border border-gray-200 slide-up-once">
+                    <div className="flex gap-5 justify-center items-center pb-2 border-b border-gray-300">
+                        <Image
+                            src="/images/logos/main.png"
+                            alt="Logo"
+                            width={70}
+                            height={55}
+                        />
+                        <div className="text-3xl">
+                            <span className="font-light" >
+                                {NEXT_PUBLIC_PROJECT_NAME}
+                            </span>
+
+                        </div>
+                    </div>
+
+
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
 
                         {/* header */}
@@ -370,29 +347,6 @@ export default function AuthEl({ type = 'signin', pathname, searchParams }) {
                         </div>
                     }
 
-                    {/* auth providers */}
-
-                    {
-                        authProviders && authProviders.length > 0 && ['signin', 'signup'].includes(type) &&
-                        <>
-                            <div className="flex items-center gap-3 mt-2">
-                                <div className="h-px bg-gray-300 flex-1"></div>
-                                <span className="text-sm text-gray-500">or continue with</span>
-                                <div className="h-px bg-gray-300 flex-1"></div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3 mt-2">
-                                {authProviders.map((provider, index) => (
-                                    <div key={index} className={`
-                                flex items-center gap-2 justify-center cursor-pointer border border-gray-300 shadow-sm p-2 rounded-md 
-                                ${!provider.enabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 transition'}
-                                `}>
-                                        <Image width={40} height={40} src={provider.icon} alt={provider.name} className="h-6 w-6" />
-                                        <span className="text-sm">{provider.name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    }
 
                     {/* links */}
                     <div className="mt-5 opacity-85">

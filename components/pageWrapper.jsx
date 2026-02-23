@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
 import "../app/globals.scss";
-import { isAuthPath, isFilePath } from "@/utils/other";
-import pagesMap from "@/components/pages";
+ import pagesMap from "@/components/pages";
 import { redirect } from "next/navigation";
 import ToasterSonnar from "@/components/sonnar/sonnar";
 import { getCookie, getSession } from "@/actions/auth";
@@ -11,6 +10,7 @@ import { saGetItem } from "@/actions";
 import AccountMessages from "@/components/other/accountMessages";
 import { SignoutEl } from "@/components/auth";
 import ExtenSession from "@/components/auth/extenSession";
+import { isAuthPath, isFilePath } from "@/utils/auth";
 
 const NEXT_PUBLIC_PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'SuperApp';
 const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME || 'aaaa';
@@ -38,7 +38,6 @@ export default async function PageWrapper({ children, params, searchParams }) {
     // console.log({ params, searchParams });
     const pathname = params.slug && params.slug.length > 1 ? `/${params.slug.join('/')}` : params.slug[0]
     // console.log('pathname ==> ', pathname);
-    console.log('PageWrapper render ==> ', pathname);
 
 
     // if its a file path leave for nextjs router to handle
@@ -48,7 +47,7 @@ export default async function PageWrapper({ children, params, searchParams }) {
 
     // get session here if needed
     const session = await getSession();
-    console.log('session: ', session);
+    // console.log('session: ', session);
 
     let user = null;
     let account = null;

@@ -97,10 +97,14 @@ model workspaces {
   name       String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  account    accounts? @relation(fields: [account_id], references: [id], onDelete: Cascade  )
+  account    accounts? @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String?
 
-  notes notes[]
+  notes      notes[]
+  projects   projects[]
+  contacts   contacts[]
+  medias     medias[]
+  submitions submitions[]
 
   @@index([name])
 }
@@ -116,4 +120,70 @@ model notes {
   workspace_id String?
 
   @@index([title])
+}
+
+model projects {
+  id        String  @id @default(cuid())
+  name      String
+  ai_prompt String? @default("")
+  skeleton  String? @default("")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  workspace    workspaces?  @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace_id String?
+  contacts     contacts[]
+  medias       medias[]
+  submitions   submitions[]
+
+  @@index([name])
+}
+
+model contacts {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  phone      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  workspace    workspaces? @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace_id String?
+  project      projects?   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project_id   String?
+
+  @@index([name])
+  @@index([email])
+  @@index([phone])
+}
+
+model medias {
+  id         String   @id @default(cuid())
+  s3key      String
+  url        String
+  type       String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  workspace    workspaces? @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace_id String?
+  project      projects?   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project_id   String?
+
+  @@index([type])
+}
+
+model submitions {
+  id         String   @id @default(cuid())
+  questions  Json     @default("[]")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  project      projects?   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project_id   String?
+  workspace    workspaces? @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace_id String?
+
+  @@index([created_at])
 }
