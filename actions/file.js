@@ -32,8 +32,9 @@ export const uploadFile = async (formData) => {
             fileBuffer: await file.arrayBuffer(),
             mimeType: file.type,
         })
-        console.log('uploadRes:', uploadRes);
+        // console.log('uploadRes:', uploadRes);
         if (!uploadRes.success) {
+            console.error('Error uploading file to S3:', uploadRes.message);
             resObj.success = false;
             resObj.message = 'Failed to upload file to storage service';
             return resObj;

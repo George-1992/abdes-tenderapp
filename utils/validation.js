@@ -73,6 +73,7 @@ export const validateName = (name, fieldName = 'Name', options = {}) => {
         errors.push(`${fieldName} is required`);
         return { isValid: false, errors };
     }
+    return { isValid: errors.length === 0, errors, value: name.trim() };
 
     const trimmedName = name.trim();
 

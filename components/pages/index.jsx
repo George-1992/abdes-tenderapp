@@ -3,10 +3,12 @@ import VerifyAccount from "@/components/auth/verify";
 import Home from "@/components/pages/home";
 import Notes from "@/components/pages/notes";
 import Projects from "@/components/pages/projects";
+import Contacts from "@/components/pages/contacts";
+import Submitions from "@/components/pages/submissions";
 import Profile from "@/components/pages/profile"
 import Settings from "@/components/pages/settings";
 import Test from "@/components/pages/test";
-import { FolderKanbanIcon, HomeIcon, ListChevronsUpDown, NotebookTextIcon } from "lucide-react";
+import { FolderKanbanIcon, HomeIcon, NotebookTextIcon, UserRoundIcon, SquarePenIcon, Settings2Icon } from "lucide-react";
 
 const pagesMap = [
     // AUTH PAGES
@@ -63,6 +65,14 @@ const pagesMap = [
         pathname: '/projects',
         Component: (props) => { return <Projects {...props} />; },
     },
+    {
+        pathname: '/contacts',
+        Component: (props) => { return <Contacts {...props} />; },
+    },
+    {
+        pathname: '/submissions',
+        Component: (props) => { return <Submitions {...props} />; },
+    },
 
 ]
 
@@ -80,9 +90,27 @@ export const pagesMapSidebar = [
         subItems: []
     },
     {
+        name: 'Contacts',
+        icon: (props) => <UserRoundIcon {...props} />,
+        href: '/contacts',
+        subItems: []
+    },
+    {
+        name: 'Submitions',
+        icon: (props) => <SquarePenIcon {...props} />,
+        href: '/submissions',
+        subItems: []
+    },
+    {
         name: 'Notes',
         icon: (props) => <NotebookTextIcon {...props} />,
         href: '/notes',
+        subItems: []
+    },
+    {
+        name: 'Settings',
+        icon: (props) => <Settings2Icon {...props} />,
+        href: '/settings',
         subItems: []
     },
     // {

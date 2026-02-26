@@ -63,7 +63,7 @@ export const Table = ({
     onChange = (updatedData) => { console.log('updatedData:', updatedData); },
     onRowChange = (rowIndex, newRowData) => { console.log('Row Change:', rowIndex, newRowData); return { success: false } },
     onRowDelete = (rowIndex, rowData) => { console.log('Row Delete:', rowIndex, rowData); },
-    onAddNew = (newRowData) => { console.log('Add New Row:', newRowData); return { success: false } },
+    onAddNew = null,
     onPreview = (rowData) => { console.log('Preview:', rowData); },
     onFilter = () => { },
     newItemChange = () => { },
@@ -577,7 +577,7 @@ export const Table = ({
                 {/* new and filters */}
                 <div className='h-12 flex flex-1  items-center'>
                     {
-                        onAddNew && <button
+                        typeof onAddNew === 'function' && <button
                             className='btn btn-secondary flex items-center'
                             onClick={onAddNew}
                         >

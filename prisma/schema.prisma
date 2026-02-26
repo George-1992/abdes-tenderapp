@@ -104,7 +104,7 @@ model workspaces {
   projects   projects[]
   contacts   contacts[]
   medias     medias[]
-  submitions submitions[]
+  submitions submissions[]
 
   @@index([name])
 }
@@ -123,37 +123,45 @@ model notes {
 }
 
 model projects {
-  id        String  @id @default(cuid())
-  name      String
-  ai_prompt String? @default("")
-  skeleton  String? @default("")
+  id                      String  @id @default(cuid())
+  name                    String
+  status                  String? @default("active")
+  ai_prompt               String? @default("")
+  qualification_rules     String? @default("")
+  proposal_result         String? @default("")
+  skeleton                String? @default("")
+  question_analysis_rules String? @default("")
+  questions               Json?   @default("[]")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  workspace    workspaces?  @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace    workspaces?   @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
   workspace_id String?
   contacts     contacts[]
   medias       medias[]
-  submitions   submitions[]
+  submitions   submissions[]
 
   @@index([name])
 }
 
 model contacts {
   id         String   @id @default(cuid())
-  name       String
+  first_name String
+  last_name  String
   email      String
-  phone      String
+  phone      String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  workspace    workspaces? @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  workspace    workspaces?   @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
   workspace_id String?
-  project      projects?   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  project      projects?     @relation(fields: [project_id], references: [id], onDelete: Cascade)
   project_id   String?
+  submissions  submissions[]
 
-  @@index([name])
+  @@index([first_name])
+  @@index([last_name])
   @@index([email])
   @@index([phone])
 }
@@ -161,8 +169,9 @@ model contacts {
 model medias {
   id         String   @id @default(cuid())
   s3key      String
-  url        String
+  url        String?
   type       String?
+  content    String?  @default("")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -174,7 +183,7 @@ model medias {
   @@index([type])
 }
 
-model submitions {
+model submissions {
   id         String   @id @default(cuid())
   questions  Json     @default("[]")
   created_at DateTime @default(now())
@@ -184,6 +193,8 @@ model submitions {
   project_id   String?
   workspace    workspaces? @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
   workspace_id String?
+  contact      contacts?   @relation(fields: [contact_id], references: [id], onDelete: Cascade)
+  contact_id   String?
 
   @@index([created_at])
 }
