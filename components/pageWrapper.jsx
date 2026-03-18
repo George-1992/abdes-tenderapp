@@ -3,14 +3,14 @@ import "../app/globals.scss";
  import pagesMap from "@/components/pages";
 import { redirect } from "next/navigation";
 import ToasterSonnar from "@/components/sonnar/sonnar";
-import { getCookie, getSession } from "@/actions/auth";
+import { getCookie, getSession, isAuthPath } from "@/actions/auth";
 import Sidebar from "@/components/navbars/sidebar";
 import TopNav from "@/components/navbars/top";
 import { saGetItem } from "@/actions";
 import AccountMessages from "@/components/other/accountMessages";
 import { SignoutEl } from "@/components/auth";
 import ExtenSession from "@/components/auth/extenSession";
-import { isAuthPath, isFilePath } from "@/utils/auth";
+import { isFilePath } from "@/utils/auth";
 
 const NEXT_PUBLIC_PROJECT_NAME = process.env.NEXT_PUBLIC_PROJECT_NAME || 'SuperApp';
 const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME || 'aaaa';

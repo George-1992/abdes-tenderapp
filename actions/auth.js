@@ -14,6 +14,7 @@ const EXPIREY_SECONDS = process.env.EXPIREY_SECONDS || 86400; // default 24 hour
 const allowSignInUserStatuses = ['active', 'pending'];
 const DOMAIN = process.env.DOMAIN || 'localhost:3000';
 const sessionExpiesIn = `${EXPIREY_SECONDS / 3600}h`;
+const ALLOW_SIGNUP = process.env.ALLOW_SIGNUP === 'true' ? true : false;
 
 
 
@@ -661,5 +662,37 @@ export const getCookie = async (name) => {
     } catch (error) {
         console.error('getCookie error ==> ', error);
         return null;
+    }
+}
+
+
+export const isAuthPath = (path) => {
+    try {
+        if (!path) {
+            console.log('isAuthPath no path');
+            return false;
+        }
+
+        if (typeof path !== 'string' || !path.trim()) {
+            console.log('isAuthPath invalid path');
+            return false;
+        }
+
+        const cleanPath = path.trim().replace(/[/\\]+$/, '');
+
+        // Define auth paths
+        const authPaths = [
+            '/auth/signin', '/auth/signup', '/auth/verify', '/auth/reset'
+        ].filter(path => {
+            if (path === '/auth/signup') {
+                return ALLOW_SIGNUP;
+            }
+            return true;
+        });
+        return authPaths.includes(cleanPath);
+
+    } catch (error) {
+        console.log('isAuthPath error ==> ', error);
+        return false;
     }
 }
