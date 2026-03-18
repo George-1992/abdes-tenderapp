@@ -21,4 +21,35 @@ export const isFilePath = (path) => {
     }
 };
 
- 
+
+export const isAuthPath = (path) => {
+    try {
+        if (!path) {
+            console.log('isAuthPath no path');
+            return false;
+        }
+
+        if (typeof path !== 'string' || !path.trim()) {
+            console.log('isAuthPath invalid path');
+            return false;
+        }
+
+        const cleanPath = path.trim().replace(/[/\\]+$/, '');
+
+        // Define auth paths
+        const authPaths = [
+            '/auth/signin', '/auth/signup', '/auth/verify', '/auth/reset'
+        ].filter(path => {
+            if (path === '/auth/signup') {
+                // return ALLOW_SIGNUP;
+                return true;
+            }
+            return true;
+        });
+        return authPaths.includes(cleanPath);
+
+    } catch (error) {
+        console.log('isAuthPath error ==> ', error);
+        return false;
+    }
+}
