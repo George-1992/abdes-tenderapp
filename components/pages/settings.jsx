@@ -21,15 +21,15 @@ export default function Settings({ params, pathname, searchParams, session, user
             hidden: false,
             disabled: true,
         },
-        {
-            name: 'name',
-            label: 'Name',
-            placeholder: 'Enter your name',
-            type: 'text',
-            required: true,
-            hidden: false,
-            disabled: false,
-        },
+        // {
+        //     name: 'name',
+        //     label: 'Name',
+        //     placeholder: 'Enter your name',
+        //     type: 'text',
+        //     required: true,
+        //     hidden: false,
+        //     disabled: true,
+        // },
     ]
 
     const fields = allFields
@@ -386,11 +386,11 @@ export default function Settings({ params, pathname, searchParams, session, user
                                 })
                             }
                         </div>
-                        <div className="flex items-center justify-end" type="submit">
+                        {/* <div className="flex items-center justify-end" type="submit">
                             <button className="btn btn-primary w-24" disabled={isLoading}>
                                 Save
                             </button>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             </div>
@@ -406,7 +406,7 @@ export default function Settings({ params, pathname, searchParams, session, user
                     className="card-1 w-full"
                     editable={isOwner ? true : false}
                     editableInline={false}
-                    allowAddNew={true}
+                    allowAddNew={false}
                     isUserTable={true}
                     actions={['edit', 'delete']}
                     columns={[
@@ -421,7 +421,7 @@ export default function Settings({ params, pathname, searchParams, session, user
                         // },
                     ]}
                     data={users}
-                    onAddNew={isOwner ? handleNewUserClick : null}
+                    // onAddNew={isOwner ? handleNewUserClick : null}
                     onRowChange={handleUpdateUser}
                     onRowDelete={handleDeleteUser}
                 // data={[

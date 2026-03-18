@@ -42,8 +42,6 @@ export const isAuthPath = (path) => {
         const authPaths = [
             '/auth/signin', '/auth/signup', '/auth/verify', '/auth/reset'
         ].filter(path => {
-            return true;
-
             if (path === '/auth/signup') {
                 return ALLOW_SIGNUP;
             }

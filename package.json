@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "^22.0.0"
+  },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.52",
     "@ai-sdk/react": "^2.0.70",
