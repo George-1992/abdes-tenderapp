@@ -47,6 +47,7 @@ model accounts {
   status     account_status @default(inactive)
   created_at DateTime       @default(now())
   updated_at DateTime       @updatedAt
+  other      Json?          @default("{}")
 
   users_and_accounts users_and_accounts[]
   workspaces         workspaces[]

@@ -1,4 +1,4 @@
-import HandleAiRequest from "@/components/aiAgent/functions/helper";
+import HandleAiRequest from "@/components/ai/functions/helper";
 
 
 export async function POST(req) {

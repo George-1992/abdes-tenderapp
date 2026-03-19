@@ -7,8 +7,11 @@ import Contacts from "@/components/pages/contacts";
 import Submitions from "@/components/pages/submissions";
 import Profile from "@/components/pages/profile"
 import Settings from "@/components/pages/settings";
-import Test from "@/components/pages/test";
-import { FolderKanbanIcon, HomeIcon, NotebookTextIcon, UserRoundIcon, SquarePenIcon, Settings2Icon } from "lucide-react";
+import {
+    FolderKanbanIcon, HomeIcon, NotebookTextIcon,
+    UserRoundIcon, SquarePenIcon, Settings2Icon
+} from "lucide-react";
+import TestPage from "@/components/pages/test";
 
 const pagesMap = [
     // AUTH PAGES
@@ -46,18 +49,6 @@ const pagesMap = [
         Component: (props) => { return <div className="container-main">pagesMap not-found</div> },
     },
     {
-        pathname: '/ai-agent',
-        Component: (props) => { return <AiAgentPage {...props} />; },
-    },
-    // {
-    //     pathname: '/test',
-    //     Component: (props) => { return <Test {...props} />; },
-    // },
-    // {
-    //     pathname: '/test/{{ITEM_ID}}',
-    //     Component: (props) => { return <Test {...props} />; },
-    // },
-    {
         pathname: '/notes',
         Component: (props) => { return <Notes {...props} />; },
     },
@@ -73,6 +64,10 @@ const pagesMap = [
         pathname: '/submissions',
         Component: (props) => { return <Submitions {...props} />; },
     },
+    {
+        pathname: '/test',
+        Component: (props) => { return <TestPage {...props} />; },
+    }
 
 ]
 
@@ -113,15 +108,6 @@ export const pagesMapSidebar = [
         href: '/settings',
         subItems: []
     },
-    // {
-    //     name: 'Test',
-    //     icon: (props) => <ListChevronsUpDown {...props} />,
-    //     href: '/test',
-    //     expanded: true,
-    //     subItems: [
-    //         { name: 'sub-test', href: '/test/sub-test', icon: (props) => <div {...props}>test</div> },
-    //     ]
-    // },
 ]
 
 export default pagesMap;

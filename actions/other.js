@@ -1,7 +1,7 @@
 'use server';
 
 import parseFile from "@/actions/parseFile";
-import { aiRequest } from "@/components/aiAgent/functions/simple";
+import { aiRequest } from "@/components/ai/functions/simple";
 import Prisma from "@/services/prisma";
 import _ from "lodash";
 

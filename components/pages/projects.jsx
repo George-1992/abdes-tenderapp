@@ -1,24 +1,23 @@
 'use client';
 
-import { saCreateItem, saGetItem, saGetItems, saUpdateItem, saDeleteItem, saDeleteItems } from "@/actions";
+import {
+    saCreateItem, saGetItem, saGetItems, saUpdateItem,
+    saDeleteItem, saDeleteItems
+} from "@/actions";
 import { notify } from "@/components/sonnar/sonnar";
-import { ExpandableModal, PopupModal } from "@/components/other/modals";
+import { ExpandableModal } from "@/components/other/modals";
 import Table from "@/components/table";
 import { cloneDeep, includes } from "lodash";
 import { useState, useEffect } from "react";
-import FormBuilder from "@/components/formBuilder";
 import FileUploader from "@/components/formBuilder/fileUploader";
 import { defaults } from "@/data/defaults";
-import { nanoid } from "nanoid";
 import { DownloadIcon, FlaskConicalIcon, RotateCcwIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import Select from "@/components/select";
-import parseFile from "@/actions/parseFile";
 import { initAnalyzeQuestions, initCreatQuestions, initFileParsing, initGenerateProposal } from "@/actions/other";
 import Collapse from "@/components/other/collapse";
 import { GetLinkButton } from "@/components/questions/parts";
 import { qGetLink } from "@/components/questions/actions";
-import CopyEl from "@/components/other/copyEl";
 import { Toggle } from "@/components/other/toggle";
 
 export default function Projects({ pathname, user, account, session, workspace }) {

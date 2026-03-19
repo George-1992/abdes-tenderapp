@@ -2,7 +2,6 @@
 'use client';
 
 import { SignoutEl } from "@/components/auth";
-import Workspaces from "@/components/other/workspaces";
 import { pagesMapSidebar } from "@/components/pages";
 import { cn } from "@/libs/utils";
 import {
@@ -45,7 +44,6 @@ const defaultItems = pagesMapSidebar || [
 export default function Sidebar({
     items = defaultItems, pathname = '',
     searchParams, session, user, account,
-    workspaces = []
 }) {
 
     // console.log('Sidebar render ==> ', pathname);

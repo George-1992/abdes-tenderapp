@@ -1,6 +1,6 @@
 'use client';
 import { saCreateItem } from "@/actions";
-import { aiRequest } from "@/components/aiAgent/functions/simple";
+import { aiRequest } from "@/components/ai/functions/simple";
 import Loading from "@/components/other/loading";
 import { qCreateToken, qGetLink } from "@/components/questions/actions";
 import { CheckIcon, CopyIcon, Loader2Icon } from "lucide-react";
